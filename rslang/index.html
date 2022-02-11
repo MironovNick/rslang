@@ -9,13 +9,80 @@
 		<link rel="icon" href="images/icon.jpg">
 		<link rel="stylesheet" href="style/style.css">
 		<link rel="stylesheet" href="style/mobstyle.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     </head>
     <body>
 		<section class="main_page">
+			<header>
+				<img id="logo" src="images/logo.jpg" alt="logo">
+				<div class="menu_bar">
+					<a class="main_page_ref">главная</a>
+					<a class="main_page_textbook_ref">учебник</a>
+					<a href="">мини-игры</a>
+					<a href="">статистика</a>
+				</div>
+				<button class="log_in_button">
+					войти
+				</button>
+			</header>
+			
+			<div class="main_page_content">
+				<div class="main_page_content_text_area">
+					<h1>Увеличь словарный запас с RSLang</h1>
+					<h3>
+						Традиционные и новые эффективные подходы к изучению слов, 
+						мотивация в виде статистики, 
+						различные уровни сложности - все это ты найдешь в RSLang
+					</h3>
+					<button class="video_button">
+						смотреть видео
+					</button>
+				</div>
+				<div class="main_page_content_image_area">
+					<img id="logo" src="images/frontimg.jpg" alt="logo" width="524" height="385">
+				</div>
+			</div>
+			
+			<footer>
+			</footer>
+			
+			<div id="modal_body" class="modal_body">
+			
+				<div class="modal_window" id="log_in_window">
+					<a class="close modal_log_close">&#10006;</a>
+					<p><span class="modal_window_title">Вход в приложение</span></p>
+					<p>При регистрации будет получен доступ к дополнительным опциям приложения, статистике и собственному словарю</p>
+					<input class="modal_window_input log_in_window_input_email" type="email" placeholder="E-mail" required value>
+					<input class="modal_window_input log_in_window_input_pswd" type="text" placeholder="Пароль" required value>
+					<button class="log_in_button modal_window_log_in_enter" id="modal_window_log_in_button">
+						войти
+					</button>
+					</br>
+					<button class="log_in_button" id="modal_window_registration_button">
+						регистрация
+					</button>
+				</div>
+				
+				<div class="modal_window" id="sign_in_window">
+					<a class="close modal_log_close">&#10006;</a>
+					<p><span class="modal_window_title">Регистрация</span></p>
+					<p>При регистрации будет получен доступ к дополнительным опциям приложения, статистике и собственному словарю</p>
+					<input class="modal_window_input sign_in_window_input_name" type="text" placeholder="Имя" required value>
+					<input class="modal_window_input sign_in_window_input_email" type="email" placeholder="E-mail" required value>
+					<input class="modal_window_input sign_in_window_input_pswd" type="text" placeholder="Пароль" required value>
+					<button class="log_in_button modal_window_sign_in_create" id="modal_window_log_in_button">
+						создать аккаунт
+					</button>
+				</div>
+			
+			</div>
+			
+		</section>
+		
+		<section class="textbook_page">
 			<header>
 				<img id="logo" src="images/logo.jpg" alt="logo">
 				<div class="menu_bar">
@@ -28,10 +95,122 @@
 					войти
 				</button>
 			</header>
-			<div class="main_page_content">
+			
+			<h2>выберите уровень сложности</h2>
+			
+			<div class="textbook_page_content">
+			
+				<div class="textbook_page_content_left">
+					<div class="level_box" id="level_box1">
+						<span class="box_title">A1</span>
+						<span class="box_text">Elementary</span>
+					</div>
+					<div class="level_box" id="level_box2">
+						<span class="box_title">A2</span>
+						<span class="box_text">Pre-intermidiate</span>
+					</div>
+					<div class="level_box" id="level_box3">
+						<span class="box_title">B1</span>
+						<span class="box_text">Intermidiate</span>
+					</div>
+					<div class="level_box" id="level_box4">
+						<span class="box_title">B2</span>
+						<span class="box_text">Upper-intermidiate</span>
+					</div>
+					<div class="level_box" id="level_box5">
+						<span class="box_title">C1</span>
+						<span class="box_text">Advanced</span>
+					</div>
+					<div class="level_box" id="level_box6">
+						<span class="box_title">C2</span>
+						<span class="box_text">Proficience</span>
+					</div>
+				</div>
+				
+				<div class="textbook_page_content_right">
+					<div class="textbook_page_image_container"></div>
+					<h4 class="">Начальный уровень:</h4> 
+					<p>Проверте свои знания на этом уровне перед тем как двигаться дальше. Справились? Хорошо. Не справились? В таком случае начинайте от сюда.</p>
+				</div>
 			</div>
-			<footer>
+
+			
+			<footer class="games_page_footer">
 			</footer>
 		</section>
+		
+		<section class="unit_page">
+			<header>
+				<img id="logo" src="images/logo.jpg" alt="logo">
+				<div class="menu_bar">
+					<a href="">главная</a>
+					<a href="">учебник</a>
+					<a href="">мини-игры</a>
+					<a href="">статистика</a>
+				</div>
+				<button class="log_in_button">
+					войти
+				</button>
+			</header>
+			
+			<div class="unit_page_content">
+				
+				<!--<div class="unit_item">
+					<div class="unit_item_cover"></div>
+				
+					<div class="unit_item_icons_bar">
+						<i class="fas fa-star-of-life off"></i>
+						<i class="fas fa-thumbs-up off"></i>
+					</div>
+					
+					<div class="unit_item_title"><h2>Word</h2></div>
+					
+					<div class="unit_item_string string1">
+						<p>word</p>
+						<p>[word]</p>
+						<i class="fas fa-volume-up"></i>
+					</div>
+					<div class="unit_item_string string2"><p>Wine is an alcoholic drink made from grapes.</p></div>
+					<div class="unit_item_string string3"><p>The store carried both red and white wine.</p></div>
+					<div class="divide_string"></div>
+					<div class="unit_item_string string4"><p>Вино - это алкогольный напиток из винограда</p></div>
+					<div class="unit_item_string string5"><p>В магазине было красное и белое вино</p></div>
+				</div>-->
+			
+			</div>
+			
+			<div class="page_scroller">
+				<i class="fas fa-angle-left"></i>
+				<p class="actual_page">1</p>
+				<p>/</p>
+				<p class="all_pages">30</p>
+				<i class="fas fa-angle-right"></i>
+			</div>
+		
+			<footer class="games_page_footer">
+			</footer>
+		</section>
+		
+		<section class="games_page">
+			<header>
+				<img id="logo" src="images/logo.jpg" alt="logo">
+				<div class="menu_bar">
+					<a href="">главная</a>
+					<a href="">учебник</a>
+					<a href="">мини-игры</a>
+					<a href="">статистика</a>
+				</div>
+				<button class="log_in_button">
+					войти
+				</button>
+			</header>
+			
+			<div class="games_page_content">
+			</div>
+			
+			<footer class="games_page_footer">
+			</footer>
+		</section>
+		<script type="module" src="./index.js"></script>
 	</body>
 </html>
