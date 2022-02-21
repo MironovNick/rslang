@@ -16,6 +16,31 @@ export type Word = {
   wordTranslate: string
 };
 
+export type AggrWord = {
+  _id: string,
+  group: number,
+  page: number,
+  word: string,
+  image: string,
+  audio: string,
+  audioMeaning: string,
+  audioExample: string,
+  textMeaning: string,
+  textExample: string,
+  transcription: string,
+  textExampleTranslate: string,
+  textMeaningTranslate: string,
+  wordTranslate: string,
+  userWord: {
+    difficulty: string,
+    optional: {
+      state: string,
+      correctCnt: number,
+      incorrectCnt: number
+    }
+  }
+};
+
 export type User = {
   id: string,
   name: string,

@@ -1,34 +1,42 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/named */
 /* eslint-disable no-plusplus */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable import/extensions */
 import RslController from './rslcontroller.js';
-import { Word, User, UserWordOpt } from './types';
+import {
+  Word, AggrWord, User,
+} from './types';
 
 class RslModel {
   serverUrl: string;
-  racecontroller: RslController;
+  rslController: RslController;
   group: number;
   page: number;
-  textBook: Word [];
+  pages: number [];
+  levelRsl: number;
+  textBook: AggrWord [];
+  tmpWords: Word [];
   currWord: number;
   user: User;
   audio = new Audio();
   audioTrackNum = -1;
 
   constructor(rc: RslController) {
-    this.serverUrl = 'http://localhost:27027';
-    this.racecontroller = rc;
+    this.serverUrl = 'https://react-learnwords-example-1988.herokuapp.com';
+    this.rslController = rc;
     this.group = 0;
     this.page = 0;
+    this.levelRsl = -1;
+    this.pages = [0, 0, 0, 0, 0, 0, 0];
     this.textBook = [];
+    this.tmpWords = [];
     this.currWord = 0;
     this.user = {
       id: '', name: '', email: '', password: '', token: '',
     };
 
-    //this.getWords(this.group, this.page);
     this.audio.onended = () => this.onEndPlay();
     this.audio.loop = false;
   }
@@ -53,13 +61,13 @@ class RslModel {
     }
   }
 
-  async getWords(group: number, page: number): Promise<void> {
+  async getTmpWords(group: number, page: number): Promise<void> {
     try {
       const response = await fetch(`${this.serverUrl}/words?group=${group}&page=${page}`, {
         method: 'GET',
       });
       if (response.ok) {
-        this.textBook = await response.json();
+        this.tmpWords = await response.json();
       } else {
         // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
@@ -116,6 +124,8 @@ class RslModel {
         this.user.email = user.email;
         this.user.password = user.password;
       } else {
+        this.user.token = '';
+        this.user.id = '';
         // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
@@ -125,17 +135,19 @@ class RslModel {
     }
   }
 
-  async getUserWords(userId: string, token: string): Promise<void> {
+  async createUserWord(idx: number, diff: string): Promise<void> {
     try {
-      const response = await fetch(`${this.serverUrl}/users/${userId}/words`, {
-        method: 'GET',
+      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${this.tmpWords[idx].id}`, {
+        method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${this.user.token}`,
           Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ difficulty: diff, optional: { state: 'learn', correctCnt: 0, incorrectCnt: 0 } }),
       });
       if (response.ok) {
-        const words = await response.json();
+        const newWord = await response.json();
       } else {
         // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
@@ -146,19 +158,68 @@ class RslModel {
     }
   }
 
-  async createWord(userId: string, wordId: string, token: string, diff: string): Promise<void> {
+  async updateUserWord(idx: number): Promise<void> {
     try {
-      const response = await fetch(`${this.serverUrl}/users/${userId}/words/${wordId}`, {
-        method: 'POST',
+      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${this.textBook[idx]._id}`, {
+        method: 'PUT',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${this.user.token}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ difficulty: diff, optional: { str: 'слово' } }),
+        body: JSON.stringify({
+          difficulty: 'learn',
+          optional: {
+            state: this.textBook[idx].userWord.optional.state,
+            correctCnt: this.textBook[idx].userWord.optional.correctCnt,
+            incorrectCnt: this.textBook[idx].userWord.optional.incorrectCnt,
+          },
+        }),
       });
       if (response.ok) {
         const newWord = await response.json();
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('Ошибка:', response.status);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Ошибка:', error);
+    }
+  }
+
+  async deleteUserWord(idx: number): Promise<void> {
+    try {
+      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${this.textBook[idx]._id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${this.user.token}`,
+        },
+      });
+      if (!response.ok) {
+        // eslint-disable-next-line no-console
+        console.error('Ошибка:', response.status);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Ошибка:', error);
+    }
+  }
+
+  async getUserAggregatedWords(params: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/aggregatedWords${params}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.user.token}`,
+          Accept: 'application/json',
+        },
+      });
+      if (response.ok) {
+        const words = await response.json();
+        if (words.length > 0) {
+          this.textBook = words[0].paginatedResults;
+        }
       } else {
         // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);

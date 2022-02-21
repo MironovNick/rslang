@@ -4,12 +4,13 @@
 /* eslint-disable lines-between-class-members */
 /* eslint-disable import/extensions */
 import RslController from './rslcontroller.js';
-import { Word, User } from './types';
+//import { Word, User } from './types';
 
 class MainView {
   rslcontroller: RslController;
   main: HTMLElement;
   modalBody: HTMLElement;
+  loginBtn : HTMLElement;
   logInWindow: HTMLElement;
   logInEmail: HTMLInputElement;
   logInPswd: HTMLInputElement;
@@ -23,6 +24,7 @@ class MainView {
     this.rslcontroller = rc;
 
     this.main = document.querySelector<HTMLElement>('.main_page')!;
+    this.loginBtn = this.main.querySelector<HTMLElement>('.log_in_button')!;
     this.modalBody = this.main.querySelector<HTMLElement>('.modal_body')!;
     this.logInWindow = this.main.querySelector<HTMLElement>('#log_in_window')!;
     this.logInEmail = this.logInWindow.querySelector<HTMLInputElement>('.log_in_window_input_email')!;
@@ -40,11 +42,8 @@ class MainView {
     if (this.evInit) return;
 
     this.evInit = true;
-    const textBook = this.main.querySelector<HTMLElement>('.main_page_textbook_ref');
+    const textBook = this.main.querySelector<HTMLElement>('.textbook_page_ref');
     textBook?.addEventListener('click', () => { this.textBookClick(); });
-
-    const main = this.main.querySelector<HTMLElement>('.main_page_ref');
-    main?.addEventListener('click', () => { this.mainClick(); });
 
     const login = this.main.querySelector<HTMLElement>('.log_in_button');
     login?.addEventListener('click', () => { this.logInMenuClick(); });
@@ -68,26 +67,34 @@ class MainView {
 
   textBookClick(): void {
     this.main.style.display = 'none';
-    this.rslcontroller.tbWordsView.textBookWords.style.display = 'none';
     this.rslcontroller.textBookView.textBook.style.display = 'block';
   }
 
-  mainClick(): void {
-    this.rslcontroller.textBookView.textBook.style.display = 'none';
-    this.rslcontroller.tbWordsView.textBookWords.style.display = 'none';
-    this.main.style.display = 'block';
-  }
-
   logInMenuClick(): void {
-    this.modalBody.style.visibility = 'visible';
-    this.logInWindow.style.display = 'block';
-    this.signInWindow.style.display = 'none';
+    if (!this.rslcontroller.rslModel.user.id) {
+      this.modalBody.style.visibility = 'visible';
+      this.logInWindow.style.display = 'block';
+      this.signInWindow.style.display = 'none';
+      this.logInEmail.value = this.rslcontroller.rslModel.user.email;
+      this.logInPswd.value = this.rslcontroller.rslModel.user.password;
+    } else {
+      this.logInEmail.value = '';
+      this.logInPswd.value = '';
+      this.rslcontroller.rslModel.user.id = '';
+      this.rslcontroller.rslModel.user.token = '';
+      const login = this.main.querySelector<HTMLElement>('.log_in_button')!;
+      login.textContent = 'войти';
+      this.rslcontroller.viewUserNameAll();
+      localStorage.removeItem('rslang_user');
+    }
   }
 
   logCloseClick(): void {
     this.logInWindow.style.display = 'none';
     this.signInWindow.style.display = 'none';
     this.modalBody.style.visibility = 'hidden';
+    this.loginBtn.textContent = 'выйти';
+    this.rslcontroller.viewUserNameAll();
   }
 
   logInRegistrClick(): void {

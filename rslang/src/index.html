@@ -19,19 +19,25 @@
 			<header>
 				<img id="logo" src="images/logo.jpg" alt="logo">
 				<div class="menu_bar">
-					<a class="main_page_ref">главная</a>
-					<a class="main_page_textbook_ref">учебник</a>
-					<a href="">мини-игры</a>
+					<!--a class="main_page_ref">главная</a-->
+					<a class="textbook_page_ref">учебник</a>
+					<a class="games_page_ref">мини-игры</a>
 					<a href="">статистика</a>
 				</div>
+
 				<button class="log_in_button">
 					войти
 				</button>
 			</header>
 			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
+			
 			<div class="main_page_content">
+			
 				<div class="main_page_content_text_area">
-					<h1>Увеличь словарный запас с RSLang</h1>
+					<h1>Выучи английский язык с RSLang</h1>
 					<h3>
 						Традиционные и новые эффективные подходы к изучению слов, 
 						мотивация в виде статистики, 
@@ -56,7 +62,7 @@
 					<p><span class="modal_window_title">Вход в приложение</span></p>
 					<p>При регистрации будет получен доступ к дополнительным опциям приложения, статистике и собственному словарю</p>
 					<input class="modal_window_input log_in_window_input_email" type="email" placeholder="E-mail" required value>
-					<input class="modal_window_input log_in_window_input_pswd" type="text" placeholder="Пароль" required value>
+					<input class="modal_window_input log_in_window_input_pswd" type="password" placeholder="Пароль" required value>
 					<button class="log_in_button modal_window_log_in_enter" id="modal_window_log_in_button">
 						войти
 					</button>
@@ -72,7 +78,7 @@
 					<p>При регистрации будет получен доступ к дополнительным опциям приложения, статистике и собственному словарю</p>
 					<input class="modal_window_input sign_in_window_input_name" type="text" placeholder="Имя" required value>
 					<input class="modal_window_input sign_in_window_input_email" type="email" placeholder="E-mail" required value>
-					<input class="modal_window_input sign_in_window_input_pswd" type="text" placeholder="Пароль" required value>
+					<input class="modal_window_input sign_in_window_input_pswd" type="password" placeholder="Пароль" required value>
 					<button class="log_in_button modal_window_sign_in_create" id="modal_window_log_in_button">
 						создать аккаунт
 					</button>
@@ -86,15 +92,16 @@
 			<header>
 				<img id="logo" src="images/logo.jpg" alt="logo">
 				<div class="menu_bar">
-					<a href="">главная</a>
-					<a href="">учебник</a>
-					<a href="">мини-игры</a>
+					<a class="main_page_ref">главная</a>
+					<a class="unit_page_diff_words_ref">Трудные слова</a>
+					<a class="games_page_ref">мини-игры</a>
 					<a href="">статистика</a>
 				</div>
-				<button class="log_in_button">
-					войти
-				</button>
 			</header>
+			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
 			
 			<h2>выберите уровень сложности</h2>
 			
@@ -129,7 +136,7 @@
 				
 				<div class="textbook_page_content_right">
 					<div class="textbook_page_image_container"></div>
-					<h4 class="">Начальный уровень:</h4> 
+					<h4 class="">Начальный уровень A1:</h4> 
 					<p>Проверте свои знания на этом уровне перед тем как двигаться дальше. Справились? Хорошо. Не справились? В таком случае начинайте от сюда.</p>
 				</div>
 			</div>
@@ -143,17 +150,55 @@
 			<header>
 				<img id="logo" src="images/logo.jpg" alt="logo">
 				<div class="menu_bar">
-					<a href="">главная</a>
-					<a href="">учебник</a>
-					<a href="">мини-игры</a>
+					<a class="main_page_ref">главная</a>
+					<a class="textbook_page_ref">учебник</a>
+					<a class="unit_page_diff_words_ref">Трудные слова</a>
+					<a class="games_page_ref">мини-игры</a>
 					<a href="">статистика</a>
 				</div>
-				<button class="log_in_button">
-					войти
-				</button>
 			</header>
 			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
+			
+			<div class="experience_level_bar">
+				<div class="experience_level_block_a1_active">
+					<div class="experience_level_button" id="level_button_a1">
+						<p>A1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_a2">
+						<p>A2</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_b1">
+						<p>B1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_b2">
+						<p>B2</p>
+					</div>
+				</div>
+					<div class="experience_level_block">
+				<div class="experience_level_button" id="level_button_c1">
+						<p>C1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_c2">
+						<p>C2</p>
+					</div>
+				</div>
+			</div>
+
+			
 			<div class="unit_page_content">
+			
+
 				
 				<!--<div class="unit_item">
 					<div class="unit_item_cover"></div>
@@ -175,7 +220,49 @@
 					<div class="divide_string"></div>
 					<div class="unit_item_string string4"><p>Вино - это алкогольный напиток из винограда</p></div>
 					<div class="unit_item_string string5"><p>В магазине было красное и белое вино</p></div>
-				</div>-->
+				</div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="unit_item"></div>
+				
+				<div class="last_row">
+				
+					<div class="unit_item"></div>
+					
+					<div class="unit_item"></div>
+					
+				</div-->
 			
 			</div>
 			
@@ -195,22 +282,415 @@
 			<header>
 				<img id="logo" src="images/logo.jpg" alt="logo">
 				<div class="menu_bar">
-					<a href="">главная</a>
-					<a href="">учебник</a>
-					<a href="">мини-игры</a>
+					<a class="main_page_ref">главная</a>
+					<a class="textbook_page_ref">учебник</a>
 					<a href="">статистика</a>
 				</div>
-				<button class="log_in_button">
-					войти
-				</button>
 			</header>
 			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
+			
+			<div class="experience_level_bar">
+				<div class="experience_level_block_a1_active">
+					<div class="experience_level_button" id="level_button_a1">
+						<p>A1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_a2">
+						<p>A2</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_b1">
+						<p>B1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_b2">
+						<p>B2</p>
+					</div>
+				</div>
+					<div class="experience_level_block">
+				<div class="experience_level_button" id="level_button_c1">
+						<p>C1</p>
+					</div>
+				</div>
+				<div class="experience_level_block">
+					<div class="experience_level_button" id="level_button_c2">
+						<p>C2</p>
+					</div>
+				</div>
+			</div>
+			
 			<div class="games_page_content">
+				<div class="sprint">
+					<img class="sprint_img block_img" src="images/sprint.jpg" alt="спринт">
+					<img class="sprint_logo" src="images/sprint_logo.png" alt="лого">
+					<h3>спринт</h3>
+				</div>
+				<div class="audition">
+					<img class="auditions_img block_img" src="images/audio.jpg" alt="аудиорование">
+					<img class="audio_logo" src="images/audio_logo.png" alt="лого">
+					<h3>аудиовызов</h3>
+				</div>
 			</div>
 			
 			<footer class="games_page_footer">
 			</footer>
 		</section>
+		
+		<section class="sprint_page">
+		
+			<header>
+				<img id="logo" src="images/logo.jpg" alt="logo">
+				<div class="menu_bar">
+					<a class="main_page_ref">главная</a>
+					<a class="textbook_page_ref">учебник</a>
+					<a href="">статистика</a>
+				</div>
+			</header>
+			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
+			
+			<div class="sprint_page_content">
+			
+				<div class="sprint_page_info">
+					<div class="points_bar">
+						<p class="points">+20</p>
+						<span class="total_points">200</span>
+					</div>
+					<div class="point_buster_bar">
+						<i class="fas fa-star star-active"></i>
+						<i class="fas fa-star star-inactive"></i>
+						<i class="fas fa-star star-inactive"></i>
+						<i class="fas fa-star star-inactive"></i>
+					</div>
+					<div class="taimer" id="app"><p class="timer_paragr">60</p></div>
+				</div>
+				
+				<div class="sprint_question_contaner">
+					<h2 class="sprint_question_word">Word</h2>
+					<h3 class="sprint_question_translate">Перевод слова</h3>
+					<div class="sprint_question_contaner_button_bar">
+						<button class="wrong_button">
+							неверно
+						</button>
+						<button class="correct_button">
+							верно
+						</button>
+					</div>
+				</div>
+				
+				<button class="exit_button">
+					выйти
+				</button>
+				
+				<div id="result_modal_body" class="modal_body">
+			
+					<div class="modal_window" id="result_window">
+						<h3>Ваш результат 100 очков</h3>
+						<h4>Длинна серии 10</h4>
+						<button class="exit_button statistic_button">
+							статистика
+						</button>
+						<button class="exit_button next_button">
+							продолжить
+						</button>
+						<button class="exit_button games_button">
+							меню игр
+						</button>
+					</div>
+					
+					<div class="modal_window" id="stastic_window">
+						<h3>Ваш результат 100 очков</h3>
+						<h4>Длинна серии 10</h4>
+						<div class="statistic_table" id="statistic_table">
+							<h5 class="mistakes_title">ошибок: </h5>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<h5 class="answers_title">угадано: </h5>
+														<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+						</div>
+						
+						<button class="exit_button result_button">
+							результат
+						</button>
+					</div>
+			
+				</div>
+				
+			</div>
+			
+			<footer class="games_page_footer">
+			</footer>
+			
+		</section>
+		
+		<section class="audition_page">
+		
+			<header>
+				<img id="logo" src="images/logo.jpg" alt="logo">
+				<div class="menu_bar">
+					<a class="main_page_ref">главная</a>
+					<a class="textbook_page_ref">учебник</a>
+					<a href="">статистика</a>
+				</div>
+			</header>
+			
+			<div class="user_name_bar">
+				<h2 class="user_name"></h2>
+			</div>
+			
+			<div class="audition_page_content">
+			
+				<div class="top_bar">
+					<div class="top_bar_image">
+						<img id="audio_icon" src="images/audio_logo_gray.png" alt="audio icon">
+						<img id="word_image" src="" alt="">
+					</div>
+					<div class="hearts_bar">
+						<i class="fas fa-heart heart_active"></i>
+						<i class="far fa-heart heart_inactive"></i>
+						<i class="far fa-heart heart_inactive"></i>
+						<i class="far fa-heart heart_inactive"></i>
+						<i class="far fa-heart heart_inactive"></i>
+					</div>
+				</div>
+				
+				<div class="audition_page_word_title_bar"><h2 class="audition_page_word_title"></h2></div>
+				
+				<div class="words_bar">
+					<p class="before_answer">word1</p>
+					<p class="before_answer">word2</p>
+					<p class="before_answer">word3</p>
+					<p class="before_answer">word4</p>
+					<p class="before_answer">word5</p>
+				</div>
+				
+				<button class="exit_button">
+					следующее слово
+				</button>
+				
+				<div id="result_modal_body" class="modal_body">
+			
+					<div class="modal_window" id="result_window">
+						<h3>Ваш результат 100 угаданных слов</h3>
+						<button class="exit_button statistic_button">
+							статистика
+						</button>
+						<button class="exit_button next_button">
+							продолжить
+						</button>
+						<button class="exit_button games_button">
+							меню игр
+						</button>
+					</div>
+					
+					<div class="modal_window" id="stastic_window">
+						<h3>Ваш результат 100 угаданных слов</h3>
+						<div class="statistic_table" id="statistic_table">
+							<h5 class="mistakes_title">ошибок: </h5>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<h5 class="answers_title">угадано: </h5>
+														<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+							<div class="statistic_table_row">
+								<i class="fas fa-volume-up fas_statistic_table"></i>
+								<p class="">word</p>
+								<p class=""> - </p>
+								<p class="">слово</p>
+							</div>
+						</div>
+						
+						<button class="exit_button result_button">
+							результат
+						</button>
+					</div>
+			
+				</div>
+				
+			</div>
+				
+			</div>
+			
+			<footer class="games_page_footer">
+			</footer>
+		
+		</section>
+		
 		<script type="module" src="./index.js"></script>
 	</body>
 </html>

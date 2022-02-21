@@ -2,6 +2,7 @@ class MainView {
     constructor(rc) {
         this.rslcontroller = rc;
         this.main = document.querySelector('.main_page');
+        this.loginBtn = this.main.querySelector('.log_in_button');
         this.modalBody = this.main.querySelector('.modal_body');
         this.logInWindow = this.main.querySelector('#log_in_window');
         this.logInEmail = this.logInWindow.querySelector('.log_in_window_input_email');
@@ -17,10 +18,8 @@ class MainView {
         if (this.evInit)
             return;
         this.evInit = true;
-        const textBook = this.main.querySelector('.main_page_textbook_ref');
+        const textBook = this.main.querySelector('.textbook_page_ref');
         textBook?.addEventListener('click', () => { this.textBookClick(); });
-        const main = this.main.querySelector('.main_page_ref');
-        main?.addEventListener('click', () => { this.mainClick(); });
         const login = this.main.querySelector('.log_in_button');
         login?.addEventListener('click', () => { this.logInMenuClick(); });
         const loginRegistr = this.main.querySelector('#modal_window_registration_button');
@@ -38,23 +37,33 @@ class MainView {
     }
     textBookClick() {
         this.main.style.display = 'none';
-        this.rslcontroller.tbWordsView.textBookWords.style.display = 'none';
         this.rslcontroller.textBookView.textBook.style.display = 'block';
     }
-    mainClick() {
-        this.rslcontroller.textBookView.textBook.style.display = 'none';
-        this.rslcontroller.tbWordsView.textBookWords.style.display = 'none';
-        this.main.style.display = 'block';
-    }
     logInMenuClick() {
-        this.modalBody.style.visibility = 'visible';
-        this.logInWindow.style.display = 'block';
-        this.signInWindow.style.display = 'none';
+        if (!this.rslcontroller.rslModel.user.id) {
+            this.modalBody.style.visibility = 'visible';
+            this.logInWindow.style.display = 'block';
+            this.signInWindow.style.display = 'none';
+            this.logInEmail.value = this.rslcontroller.rslModel.user.email;
+            this.logInPswd.value = this.rslcontroller.rslModel.user.password;
+        }
+        else {
+            this.logInEmail.value = '';
+            this.logInPswd.value = '';
+            this.rslcontroller.rslModel.user.id = '';
+            this.rslcontroller.rslModel.user.token = '';
+            const login = this.main.querySelector('.log_in_button');
+            login.textContent = 'войти';
+            this.rslcontroller.viewUserNameAll();
+            localStorage.removeItem('rslang_user');
+        }
     }
     logCloseClick() {
         this.logInWindow.style.display = 'none';
         this.signInWindow.style.display = 'none';
         this.modalBody.style.visibility = 'hidden';
+        this.loginBtn.textContent = 'выйти';
+        this.rslcontroller.viewUserNameAll();
     }
     logInRegistrClick() {
         this.logInWindow.style.display = 'none';
