@@ -1,0 +1,320 @@
+@media (min-device-width : 768px) and (max-device-width : 1023px){
+	
+	
+.textbook_page{
+	position:relative;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	display: none;
+	height: 1000px;
+}	
+	
+.unit_page{
+	position:relative;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	display: none;
+	height: 4450px;
+}
+	
+.page_scroller{
+	width: 140px;
+	display: flex;
+	margin: auto;
+	margin-top: 15px;
+	height: 30px;
+}	
+	
+.games_page{
+	position:relative;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	display: none;
+	height: 1000px;
+}	
+	
+	
+	
+	
+	
+.main_page_container{
+	width: 768px;
+	height: auto;
+}
+
+header{
+	width: 768px;
+	height: 110px;
+	margin: auto;
+	display: flex;
+}
+
+
+.menu_bar a{
+	font-family: 'Roboto', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	letter-spacing: 2px;
+	cursor: pointer;
+	color: #4D4D4D;
+	transition: all 0.5s ease-out;
+	text-decoration: none;	
+	margin-right: 20px;
+	text-transform: uppercase;
+}
+
+.menu_bar a:hover{
+	color: #5FE8F2;
+	text-decoration: underline;	
+	transition: all 0.5s ease-out;
+}
+
+.log_in_button{
+	width: 140px;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-size: 14px;
+    font-weight: 500;
+	border: 0;
+	border-radius: 10px;
+    cursor: pointer;
+	background-color: #5FE8F2;
+    margin-left: auto;
+    margin-right: 10px;
+	margin-top: 60px;
+	color: white;
+	transition: all 0.5s ease-out;
+}
+
+.log_in_button:hover{
+	border: 1px solid #5FE8F2;
+	background-color: white;
+	color: #5FE8F2;
+	transition: all 0.5s ease-out;
+}
+
+.user_name_bar{
+	width: 768px;
+	height: 30px;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.user_name{
+	font-family: 'Roboto', sans-serif;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	letter-spacing: 2px;
+	cursor: pointer;
+	color: #4D4D4D;
+	text-align: left;
+	text-decoration: none;	
+	margin: 0 0 0 0;
+	text-transform: capitalize;
+}
+
+.main_page_content{
+	width: 768px;
+	height: 700px;
+	margin: auto;
+	margin-top: 15px;
+	display: flex;
+}
+
+.main_page_content_text_area{
+	width: 440px;
+	height: 400px;
+}
+
+h1{
+	font-family: 'Roboto', sans-serif;
+	width: 650px;
+    margin-top: 35px;
+    margin-bottom: 0;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 28px;
+	color: #4D4D4D;
+}
+
+h2{
+	font-family: 'Roboto', sans-serif;
+    margin: 10px 0 0 0;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 25px;
+	color: #4D4D4D;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+h3{
+	font-family: 'Roboto', sans-serif;
+	width: 440px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+	color: #4D4D4D;
+}
+
+.video_button{
+	width: 140px;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-size: 14px;
+    font-weight: 500;
+	border: 0;
+	border-radius: 10px;
+    cursor: pointer;
+	background-color: #5FE8F2;
+    margin-left: 0px;
+	margin-top: 45px;
+	color: white;
+	transition: all 0.5s ease-out;
+}
+
+.video_button:hover{
+	border: 1px solid #5FE8F2;
+	background-color: white;
+	color: #5FE8F2;
+	transition: all 0.5s ease-out;
+}
+
+.main_page_content_image_area{
+	width: 318px;
+	height: 400px;
+}
+
+#frontimg{
+	width: 318px;
+	height: 233px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.textbook_page_content{
+	width: 768px;
+	height: 660px;
+	margin: auto;
+	margin-top: 85px;
+	display: flex;
+}
+
+.textbook_page_content_left{
+	width: 300px;
+	height: inherit;
+}
+
+.textbook_page_content_right{
+	width: 468px;
+	height: inherit;
+}
+
+.level_box{
+	width: 300px;
+	height: 60px;
+	margin-bottom: 15px;
+	cursor: pointer;
+	transition: all 0.5s ease-out;
+}
+
+.level_box:hover{
+	box-shadow: 0px 5px 21px 6px rgba(34, 60, 80, 0.2);
+	transition: all 0.5s ease-out;
+}
+
+.box_title{
+	font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 60px;
+	color: white;
+	text-transform: uppercase;
+	margin-left: 20px;
+	
+}
+
+.box_text{
+	font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 28px;
+	color: white;
+}
+
+.textbook_page_content_right p{
+	font-family: 'Roboto', sans-serif;
+	width: 300px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+	color: #4D4D4D;
+	margin: auto;
+}
+
+.textbook_page_content_right h4{
+	font-family: 'Roboto', sans-serif;
+	margin-left: 80px;
+    margin-top: 50px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+	color: #4D4D4D;
+	font-weight: 600;
+	text-align: left;
+}
+
+
+
+
+
+
+.unit_page_content{
+	width: 768px;
+	height: auto;
+	margin: auto;
+	margin-top: 35px;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+
+
+
+.words_bar{
+	width: 768px;
+	height: 50px;
+	margin: auto;
+	margin-top: 90px;
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+
+
+}
+
+@media (min-device-width : 320px) and (max-device-width : 767px){
+	
+}
