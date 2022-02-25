@@ -55,6 +55,10 @@ class SprintView {
         };
     }
     nextQuestion() {
+        if (this.words.length < 2) {
+            this.gamesBtnClick();
+            return;
+        }
         this.wordIdx++;
         if (this.wordIdx >= this.words.length)
             this.wordIdx = 0;
@@ -103,6 +107,7 @@ class SprintView {
         }
         else {
             this.resultSprint();
+            this.updateResult();
         }
     }
     wrongBtnClick() {
@@ -138,21 +143,26 @@ class SprintView {
         this.words.splice(0, this.words.length);
         const words = this.rslcontroller.rslModel.textBook;
         for (let i = 0; i < this.rslcontroller.rslModel.textBook.length; i++) {
-            const word = {
-                id: words[i]._id,
-                group: words[i].group,
-                page: words[i].page,
-                word: words[i].word,
-                audio: words[i].audio,
-                wordTranslate: words[i].wordTranslate,
-                correctCnt: 0,
-                errorCnt: 0,
-                state: 0,
-            };
-            this.words.push(word);
+            if (words[i].userWord.optional.state === 'learn') {
+                const word = {
+                    id: words[i]._id,
+                    group: words[i].group,
+                    page: words[i].page,
+                    word: words[i].word,
+                    audio: words[i].audio,
+                    wordTranslate: words[i].wordTranslate,
+                    correctCnt: 0,
+                    errorCnt: 0,
+                    state: 0,
+                    idx: i,
+                };
+                this.words.push(word);
+            }
         }
         this.nextQuestion();
-        this.intervalId = setInterval(() => { this.setTime(); }, 1000);
+        if (this.words.length > 1) {
+            this.intervalId = setInterval(() => { this.setTime(); }, 1000);
+        }
     }
     exitBtnClick() {
         this.resultSprint();
@@ -167,6 +177,16 @@ class SprintView {
         this.modalBody.style.visibility = 'visible';
         this.resultWindow.style.display = 'flex';
         this.stasticWindow.style.display = 'none';
+    }
+    async updateResult() {
+        if (!this.rslcontroller.rslModel.user.id || !this.rslcontroller.rslModel.user.token)
+            return;
+        const words = this.rslcontroller.rslModel.textBook;
+        for (let i = 0; i < this.words.length; i++) {
+            words[this.words[i].idx].userWord.optional.correctCnt += this.words[i].correctCnt;
+            words[this.words[i].idx].userWord.optional.incorrectCnt += this.words[i].errorCnt;
+        }
+        await this.rslcontroller.updateUserWords();
     }
     statisticBtnClick() {
         this.stasticWindow.style.display = 'block';

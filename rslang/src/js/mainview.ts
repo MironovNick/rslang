@@ -45,6 +45,13 @@ class MainView {
     const textBook = this.main.querySelector<HTMLElement>('.textbook_page_ref');
     textBook?.addEventListener('click', () => { this.textBookClick(); });
 
+    const games = this.main.querySelector<HTMLElement>('.games_page_ref')!;
+    games.addEventListener('click', () => {
+      this.main.style.display = 'none';
+      this.rslcontroller.gamesView.games.style.display = 'block';
+      this.rslcontroller.gamesView.render();
+    });
+
     const login = this.main.querySelector<HTMLElement>('.log_in_button');
     login?.addEventListener('click', () => { this.logInMenuClick(); });
 
@@ -68,9 +75,11 @@ class MainView {
   textBookClick(): void {
     this.main.style.display = 'none';
     this.rslcontroller.textBookView.textBook.style.display = 'block';
+    this.rslcontroller.textBookView.render();
+    this.rslcontroller.setLevelRsl(1);
   }
 
-  logInMenuClick(): void {
+  async logInMenuClick(): Promise<void> {
     if (!this.rslcontroller.rslModel.user.id) {
       this.modalBody.style.visibility = 'visible';
       this.logInWindow.style.display = 'block';
@@ -78,10 +87,14 @@ class MainView {
       this.logInEmail.value = this.rslcontroller.rslModel.user.email;
       this.logInPswd.value = this.rslcontroller.rslModel.user.password;
     } else {
+      await this.rslcontroller.deleteUserWordsAll(this.rslcontroller.rslModel.user.id);
       this.logInEmail.value = '';
       this.logInPswd.value = '';
       this.rslcontroller.rslModel.user.id = '';
       this.rslcontroller.rslModel.user.token = '';
+      this.rslcontroller.rslModel.user.email = '';
+      this.rslcontroller.rslModel.user.name = '';
+      this.rslcontroller.rslModel.user.password = '';
       const login = this.main.querySelector<HTMLElement>('.log_in_button')!;
       login.textContent = 'войти';
       this.rslcontroller.viewUserNameAll();

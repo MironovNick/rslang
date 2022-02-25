@@ -1,8 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-plusplus */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/extensions */
 import RslModel from './rslmodel.js';
 import MainView from './mainview.js';
 import TextBookView from './textbookview.js';
@@ -35,10 +30,14 @@ class RslController {
   }
 
   getLocalStorage(): void {
-    if (localStorage.getItem('rslang_user')) {
-      const data = localStorage.getItem('rslang_user');
+    if (localStorage.getItem('rslang_state')) {
+      const data = localStorage.getItem('rslang_state');
       if (data) {
-        this.rslModel.user = JSON.parse(data);
+        const state = JSON.parse(data);
+        this.rslModel.user = state.user;
+        this.rslModel.group = state.group;
+        this.rslModel.page = state.page;
+        this.rslModel.levelRsl = state.levelRsl;
         this.logInUser({ email: this.rslModel.user.email, password: this.rslModel.user.password });
         if (this.rslModel.user.id && this.rslModel.user.token) {
           this.mainView.loginBtn.textContent = 'выйти';
@@ -46,6 +45,7 @@ class RslController {
           this.mainView.loginBtn.textContent = 'войти';
         }
         this.viewUserNameAll();
+        this.render();
       }
     }
   }
@@ -61,23 +61,47 @@ class RslController {
     }
   }
 
+  render() {
+    if (this.getLevelRsl() === 1) {
+      this.mainView.main.style.display = 'none';
+      this.textBookView.textBook.style.display = 'block';
+      this.textBookView.render();
+    } else if (this.getLevelRsl() === 2) {
+      this.mainView.main.style.display = 'none';
+      this.tbWordsView.textBookWords.style.display = 'block';
+      this.tbWordsView.expLevelBtnActivate(this.rslModel.group);
+      if (this.rslModel.group < 6) this.getWords();
+      else this.hardWordsView();
+    }
+  }
+
   setLocalStorage(): void {
-    localStorage.setItem('rslang_user', JSON.stringify(this.rslModel.user));
+    const state = {
+      user: this.rslModel.user,
+      group: this.rslModel.group,
+      page: this.rslModel.page,
+      levelRsl: this.rslModel.levelRsl,
+    };
+    localStorage.setItem('rslang_state', JSON.stringify(state));
   }
 
   async getWords(): Promise<void> {
-    await this.getUserWords(true);
-    if (this.rslModel.textBook.length === 0) {
-      await this.rslModel.getTmpWords(this.rslModel.group, this.rslModel.page);
-      const promArr = [];
-      for (let i = 0; i < this.rslModel.tmpWords.length; i++) {
-        promArr.push(this.rslModel.createUserWord(i, 'learn'));
+    if (this.rslModel.user.id) {
+      await this.getUserWords(true);
+      if (this.rslModel.textBook.length === 0) {
+        await this.rslModel.getTmpWords(this.rslModel.group, this.rslModel.page);
+        const promArr = [];
+        for (let i = 0; i < this.rslModel.tmpWords.length; i++) {
+          promArr.push(this.rslModel.createUserWord(i, 'learn'));
+        }
+        await Promise.all(promArr);
+        await this.getUserWords(false);
+        this.rslModel.tmpWords.splice(0, this.rslModel.tmpWords.length);
       }
-      await Promise.all(promArr);
-      await this.getUserWords(false);
-      this.rslModel.tmpWords.splice(0, this.rslModel.tmpWords.length);
+    } else {
+      await this.getWhithoutUserWords(true);
     }
-    this.tbWordsView.render(this.rslModel.textBook);
+    if (this.getLevelRsl() === 2) this.tbWordsView.render(this.rslModel.textBook);
   }
 
   async getUserWords(clear: boolean): Promise<void> {
@@ -95,6 +119,41 @@ class RslController {
     this.rslModel.group = 6;
     this.tbWordsView.expLevelBtnActivate(this.rslModel.group);
     this.tbWordsView.render(this.rslModel.textBook);
+  }
+
+  async getWhithoutUserWords(clear: boolean): Promise<void> {
+    if (clear) {
+      this.rslModel.textBook.splice(0, this.rslModel.textBook.length);
+    }
+    await this.rslModel.getTmpWords(this.rslModel.group, this.rslModel.page);
+    const tWords = this.rslModel.tmpWords;
+    for (let i = 0; i < tWords.length; i++) {
+      const word = {
+        _id: tWords[i].id,
+        group: tWords[i].group,
+        page: tWords[i].page,
+        word: tWords[i].word,
+        image: tWords[i].image,
+        audio: tWords[i].audio,
+        audioMeaning: tWords[i].audioMeaning,
+        audioExample: tWords[i].audioExample,
+        textMeaning: tWords[i].textMeaning,
+        textExample: tWords[i].textExample,
+        transcription: tWords[i].transcription,
+        textExampleTranslate: tWords[i].textExampleTranslate,
+        textMeaningTranslate: tWords[i].textMeaningTranslate,
+        wordTranslate: tWords[i].wordTranslate,
+        userWord: {
+          difficulty: 'learn',
+          optional: {
+            state: 'learn',
+            correctCnt: 0,
+            incorrectCnt: 0,
+          },
+        },
+      };
+      this.rslModel.textBook.push(word);
+    }
   }
 
   async createUser(user: { name: string, email: string, password: string}): Promise<void> {
@@ -152,18 +211,47 @@ class RslController {
     }
   }
 
-  async deleteUserWord(idx: number, hardOrEasy: boolean): Promise<void> {
-    await this.rslModel.deleteUserWord(idx);
-    await this.getUserWords(hardOrEasy);
+  gameLevelClick(e: MouseEvent): void {
+    const elem = <HTMLElement>e.currentTarget;
+    const id = elem.getAttribute('data-id');
+    if (id) {
+      this.rslModel.group = +id;
+      this.rslModel.page = Math.floor(Math.random() * 30);
+      this.gamesView.expLevelBtnActivate(this.rslModel.group);
+      this.getWords();
+    }
+  }
+
+  async deleteUserWordsAll(userId: string): Promise<void> {
+    this.rslModel.tmpUserWords.splice(0, this.rslModel.tmpUserWords.length);
+    await this.rslModel.getUserWordsAll(userId);
+
+    const promArr = [];
+    const words = this.rslModel.tmpUserWords;
+    for (let i = 0; i < words.length; i++) {
+      promArr.push(this.rslModel.deleteUserWord(words[i].wordId));
+    }
+    await Promise.all(promArr);
+    this.rslModel.tmpUserWords.splice(0, this.rslModel.tmpUserWords.length);
   }
 
   async createUserWord(idx: number, diff: string): Promise<void> {
     await this.rslModel.createUserWord(idx, diff);
   }
 
-  async updateUserWord(idx: number, state: string): Promise<void> {
+  async updateStateUserWord(idx: number, state: string): Promise<void> {
     this.rslModel.textBook[idx].userWord.optional.state = state;
     await this.rslModel.updateUserWord(idx);
+  }
+
+  async updateUserWords(): Promise<void> {
+    if (!this.rslModel.user.id || !this.rslModel.user.token) return;
+
+    const promArr = [];
+    for (let i = 0; i < this.rslModel.textBook.length; i++) {
+      promArr.push(this.rslModel.updateUserWord(i));
+    }
+    await Promise.all(promArr);
   }
 
   isHardWord(idx: number): boolean {
@@ -172,6 +260,14 @@ class RslController {
 
   isEasyWord(idx: number): boolean {
     return this.rslModel.textBook[idx].userWord.optional.state === 'easy';
+  }
+
+  setLevelRsl(levelRsl: number): void {
+    this.rslModel.levelRsl = levelRsl;
+  }
+
+  getLevelRsl(): number {
+    return this.rslModel.levelRsl;
   }
 }
 export default RslController;

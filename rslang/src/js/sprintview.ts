@@ -1,13 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/extensions */
 import RslController from './rslcontroller.js';
-import {
-  Word, AggrWord, User, UserWordOpt,
-} from './types';
 
 type SprintWord = {
   id: string,
@@ -18,11 +9,11 @@ type SprintWord = {
   wordTranslate: string,
   correctCnt: number,
   errorCnt: number,
-  state: number
+  state: number,
+  idx: number
 }
 
 class SprintView {
-//==Model=========
   words: SprintWord [];
   wordIdx: number;
   points: number;
@@ -32,8 +23,6 @@ class SprintView {
   timeOut: number;
   question: { idx: number, word: string, translate: string, result: boolean };
   audio: HTMLAudioElement;
-
-//==Model=========
 
   intervalId: NodeJS.Timer;
   rslcontroller: RslController;
@@ -117,6 +106,11 @@ class SprintView {
   }
 
   nextQuestion(): void {
+    if (this.words.length < 2) {
+      this.gamesBtnClick();
+      return;
+    }
+
     this.wordIdx++;
     if (this.wordIdx >= this.words.length) this.wordIdx = 0;
     this.question.idx = this.wordIdx;
@@ -163,6 +157,7 @@ class SprintView {
       this.timeOut--;
     } else {
       this.resultSprint();
+      this.updateResult();
     }
   }
 
@@ -199,22 +194,27 @@ class SprintView {
     this.words.splice(0, this.words.length);
     const words = this.rslcontroller.rslModel.textBook;
     for (let i = 0; i < this.rslcontroller.rslModel.textBook.length; i++) {
-      const word = {
-        id: words[i]._id,
-        group: words[i].group,
-        page: words[i].page,
-        word: words[i].word,
-        audio: words[i].audio,
-        wordTranslate: words[i].wordTranslate,
-        correctCnt: 0,
-        errorCnt: 0,
-        state: 0,
-      };
-      this.words.push(word);
+      if (words[i].userWord.optional.state === 'learn') {
+        const word = {
+          id: words[i]._id,
+          group: words[i].group,
+          page: words[i].page,
+          word: words[i].word,
+          audio: words[i].audio,
+          wordTranslate: words[i].wordTranslate,
+          correctCnt: 0,
+          errorCnt: 0,
+          state: 0,
+          idx: i,
+        };
+        this.words.push(word);
+      }
     }
 
     this.nextQuestion();
-    this.intervalId = setInterval(() => { this.setTime(); }, 1000);
+    if (this.words.length > 1) {
+      this.intervalId = setInterval(() => { this.setTime(); }, 1000);
+    }
   }
 
   exitBtnClick(): void {
@@ -232,6 +232,17 @@ class SprintView {
     this.modalBody.style.visibility = 'visible';
     this.resultWindow.style.display = 'flex';
     this.stasticWindow.style.display = 'none';
+  }
+
+  async updateResult() {
+    if (!this.rslcontroller.rslModel.user.id || !this.rslcontroller.rslModel.user.token) return;
+
+    const words = this.rslcontroller.rslModel.textBook;
+    for (let i = 0; i < this.words.length; i++) {
+      words[this.words[i].idx].userWord.optional.correctCnt += this.words[i].correctCnt;
+      words[this.words[i].idx].userWord.optional.incorrectCnt += this.words[i].errorCnt;
+    }
+    await this.rslcontroller.updateUserWords();
   }
 
   statisticBtnClick(): void {

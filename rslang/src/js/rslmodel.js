@@ -6,10 +6,11 @@ class RslModel {
         this.rslController = rc;
         this.group = 0;
         this.page = 0;
-        this.levelRsl = -1;
+        this.levelRsl = 0;
         this.pages = [0, 0, 0, 0, 0, 0, 0];
         this.textBook = [];
         this.tmpWords = [];
+        this.tmpUserWords = [];
         this.currWord = 0;
         this.user = {
             id: '', name: '', email: '', password: '', token: '',
@@ -44,6 +45,26 @@ class RslModel {
             });
             if (response.ok) {
                 this.tmpWords = await response.json();
+            }
+            else {
+                console.error('Ошибка:', response.status);
+            }
+        }
+        catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+    async getUserWordsAll(userId) {
+        try {
+            const response = await fetch(`${this.serverUrl}/users/${userId}/words`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${this.user.token}`,
+                    Accept: 'application/json',
+                },
+            });
+            if (response.ok) {
+                this.tmpUserWords = await response.json();
             }
             else {
                 console.error('Ошибка:', response.status);
@@ -158,9 +179,9 @@ class RslModel {
             console.error('Ошибка:', error);
         }
     }
-    async deleteUserWord(idx) {
+    async deleteUserWord(wordId) {
         try {
-            const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${this.textBook[idx]._id}`, {
+            const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${wordId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${this.user.token}`,

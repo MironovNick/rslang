@@ -49,6 +49,17 @@ export type User = {
   token: string
 }
 
+export type UserWord = {
+  id: string,
+  difficulty: string,
+  optional: {
+    state: string,
+    correctCnt: number,
+    incorrectCnt: number
+  },
+  wordId: string
+}
+
 export type UserWordOpt = {
   state: string,
   correctCnt: number,

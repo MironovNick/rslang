@@ -1,12 +1,6 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable import/named */
-/* eslint-disable no-plusplus */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/extensions */
 import RslController from './rslcontroller.js';
 import {
-  Word, AggrWord, User,
+  Word, AggrWord, User, UserWord,
 } from './types';
 
 class RslModel {
@@ -18,6 +12,7 @@ class RslModel {
   levelRsl: number;
   textBook: AggrWord [];
   tmpWords: Word [];
+  tmpUserWords: UserWord [];
   currWord: number;
   user: User;
   audio = new Audio();
@@ -28,10 +23,11 @@ class RslModel {
     this.rslController = rc;
     this.group = 0;
     this.page = 0;
-    this.levelRsl = -1;
+    this.levelRsl = 0;
     this.pages = [0, 0, 0, 0, 0, 0, 0];
     this.textBook = [];
     this.tmpWords = [];
+    this.tmpUserWords = [];
     this.currWord = 0;
     this.user = {
       id: '', name: '', email: '', password: '', token: '',
@@ -69,11 +65,28 @@ class RslModel {
       if (response.ok) {
         this.tmpWords = await response.json();
       } else {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
+      console.error('Ошибка:', error);
+    }
+  }
+
+  async getUserWordsAll(userId: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.serverUrl}/users/${userId}/words`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${this.user.token}`,
+          Accept: 'application/json',
+        },
+      });
+      if (response.ok) {
+        this.tmpUserWords = await response.json();
+      } else {
+        console.error('Ошибка:', response.status);
+      }
+    } catch (error) {
       console.error('Ошибка:', error);
     }
   }
@@ -97,11 +110,9 @@ class RslModel {
 
         await this.logInUser({ email: user.email, password: user.password });
       } else {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }
@@ -126,11 +137,9 @@ class RslModel {
       } else {
         this.user.token = '';
         this.user.id = '';
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }
@@ -149,11 +158,9 @@ class RslModel {
       if (response.ok) {
         const newWord = await response.json();
       } else {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }
@@ -179,29 +186,25 @@ class RslModel {
       if (response.ok) {
         const newWord = await response.json();
       } else {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }
 
-  async deleteUserWord(idx: number): Promise<void> {
+  async deleteUserWord(wordId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${this.textBook[idx]._id}`, {
+      const response = await fetch(`${this.serverUrl}/users/${this.user.id}/words/${wordId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${this.user.token}`,
         },
       });
       if (!response.ok) {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }
@@ -221,11 +224,9 @@ class RslModel {
           this.textBook = words[0].paginatedResults;
         }
       } else {
-        // eslint-disable-next-line no-console
         console.error('Ошибка:', response.status);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Ошибка:', error);
     }
   }

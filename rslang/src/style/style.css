@@ -162,7 +162,9 @@ header{
 	height: 700px;
 }
 
-
+#frontimgmob{
+	display: none;
+}
 
 h1{
 	font-family: 'Roboto', sans-serif;
@@ -232,7 +234,46 @@ footer{
 	background-color: #D9DBDE;
 }
 
+.links{
+	width: 320px;
+	display: flex;
+	margin: auto;
+	justify-content: space-around;
+}
 
+.links p{
+	font-family: 'Roboto', sans-serif;
+	color: #4D4D4D;
+	font-size: 18px;
+	padding: 20px 0 0 0;
+}
+
+.links a{
+	width: auto;
+	height: 75px;
+	margin-top: 20px;
+	cursor: pointer;
+	font-size: 55px;
+	text-decoration: none;
+	color: #4D4D4D;
+	transition: .3s;
+}
+
+.links a:hover{
+	color: black;
+	transition: .3s;
+}
+
+
+#rsschoolimg{
+	width: 55px;
+	height: 55px;
+}
+
+#frontimg{
+	width: 524px; 
+	height: 385px;
+}
 
 
 
@@ -552,6 +593,36 @@ footer{
 	display: flex;
 	margin: 20px 0 0 0;
 	z-index: 2;
+}
+
+.slash{
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	color: white;
+	cursor: pointer;
+	opacity: 0.4;
+	z-index: 2;
+	margin: 0 0 0 0;
+}
+
+.rigth_answer_number{
+	color: green;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0.4;
+	z-index: 2;
+	margin: 0 0 0 0;
+}
+
+.wrong_answer_number{
+	color: red;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0.4;
+	z-index: 2;
+	margin: 0 0 0 0;
 }
 
 .fa-star-of-life{

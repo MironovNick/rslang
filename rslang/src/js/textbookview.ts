@@ -1,10 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/extensions */
 import RslController from './rslcontroller.js';
-import { Word, User } from './types';
 
 class TextBookView {
   rslcontroller: RslController;
@@ -33,6 +27,13 @@ class TextBookView {
       this.hardWorsdMenuClick();
     });
 
+    const games = this.textBook.querySelector<HTMLElement>('.games_page_ref')!;
+    games.addEventListener('click', () => {
+      this.textBook.style.display = 'none';
+      this.rslcontroller.gamesView.games.style.display = 'block';
+      this.rslcontroller.gamesView.render();
+    });
+
     this.evInit = true;
     const levels = this.textBook.querySelectorAll<HTMLButtonElement>('.level_box');
     for (let i = 0; i < levels.length; i++) {
@@ -46,21 +47,33 @@ class TextBookView {
     }
   }
 
+  render() {
+    const hardWords = this.textBook.querySelector<HTMLElement>('.unit_page_diff_words_ref')!;
+    if (this.rslcontroller.rslModel.user.id && this.rslcontroller.rslModel.user) {
+      hardWords.style.display = 'block';
+    } else {
+      hardWords.style.display = 'none';
+    }
+  }
+
   levelClick(e: MouseEvent): void {
     this.textBook.style.display = 'none';
     this.rslcontroller.tbWordsView.textBookWords.style.display = 'block';
     this.rslcontroller.tbLevelClick(e);
+    this.rslcontroller.setLevelRsl(2);
   }
 
   mainMenuClick(): void {
     this.textBook.style.display = 'none';
     this.rslcontroller.mainView.main.style.display = 'block';
+    this.rslcontroller.setLevelRsl(0);
   }
 
   hardWorsdMenuClick() {
     this.textBook.style.display = 'none';
     this.rslcontroller.tbWordsView.textBookWords.style.display = 'block';
     this.rslcontroller.hardWordsView();
+    this.rslcontroller.setLevelRsl(2);
   }
 
   levelMouseOver(e: MouseEvent): void {

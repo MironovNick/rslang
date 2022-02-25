@@ -14,10 +14,10 @@ class TbWordsView {
         textBook?.addEventListener('click', () => { this.textBookClick(); });
         const hardWords = this.textBookWords.querySelector('.unit_page_diff_words_ref');
         hardWords?.addEventListener('click', () => {
-            this.hardWorsdMenuClick();
+            this.rslcontroller.hardWordsView();
         });
         const games = this.textBookWords.querySelector('.games_page_ref');
-        games?.addEventListener('click', () => { this.gamesClick(); });
+        games.addEventListener('click', () => { this.gamesClick(); });
         const levelBtns = this.textBookWords.querySelectorAll('.experience_level_button');
         for (let i = 0; i < levelBtns.length; i++) {
             levelBtns[i].setAttribute('data-id', `${i}`);
@@ -34,34 +34,45 @@ class TbWordsView {
     mainMenuClick() {
         this.textBookWords.style.display = 'none';
         this.rslcontroller.mainView.main.style.display = 'block';
+        this.rslcontroller.setLevelRsl(0);
     }
     textBookClick() {
         this.textBookWords.style.display = 'none';
         this.rslcontroller.textBookView.textBook.style.display = 'block';
+        this.rslcontroller.textBookView.render();
+        this.rslcontroller.setLevelRsl(1);
     }
     gamesClick() {
         this.textBookWords.style.display = 'none';
         this.rslcontroller.gamesView.games.style.display = 'block';
-    }
-    hardWorsdMenuClick() {
-        this.rslcontroller.hardWordsView();
+        this.rslcontroller.gamesView.render();
     }
     levelClick(e) {
         this.rslcontroller.tbLevelClick(e);
     }
     render(words) {
         this.removeWorsEvens();
+        const hardWords = this.textBookWords.querySelector('.unit_page_diff_words_ref');
+        if (this.rslcontroller.rslModel.user.id && this.rslcontroller.rslModel.user) {
+            hardWords.style.display = 'block';
+        }
+        else {
+            hardWords.style.display = 'none';
+        }
         const content = this.textBookWords.querySelector('.unit_page_content');
         content.innerHTML = '';
         for (let i = 0; i < words.length; i++) {
             content.appendChild(this.wordHTML(`${i}`, words[i]));
         }
         const pageScroller = this.textBookWords.querySelector('.page_scroller');
+        const games = this.textBookWords.querySelector('.games_page_ref');
         if (this.rslcontroller.rslModel.group === 6) {
             pageScroller.style.display = 'none';
+            games.style.display = 'none';
         }
         else {
             pageScroller.style.display = 'flex';
+            games.style.display = 'block';
             this.setActualPage(`${this.rslcontroller.rslModel.page + 1}`);
         }
         this.addWorsEvens();
@@ -77,6 +88,11 @@ class TbWordsView {
         const learned = this.rslcontroller.isEasyWord(+idx) ? 'on' : 'off';
         content += this.rslcontroller.rslModel.user.token ? `<i class="fas fa-star-of-life ${hard}" data-id="${idx}"></i>` : '';
         content += this.rslcontroller.rslModel.user.token ? `<i class="fas fa-thumbs-up ${learned}" data-id="${idx}"></i>` : '';
+        if (this.rslcontroller.rslModel.user.token) {
+            content += `<p class="rigth_answer_number">${word.userWord.optional.correctCnt}</p>`
+                + '<p class="slash">/</p>'
+                + `<p class="wrong_answer_number">${word.userWord.optional.incorrectCnt}</p>`;
+        }
         content += '</div>'
             + `<div class="unit_item_title"><h2>${word.word}</h2></div>`
             + '<div class="unit_item_string string1">'
@@ -186,12 +202,12 @@ class TbWordsView {
             if (elem.classList.contains('off')) {
                 elem.classList.remove('off');
                 elem.classList.add('on');
-                await this.rslcontroller.updateUserWord(+id, 'hard');
+                await this.rslcontroller.updateStateUserWord(+id, 'hard');
             }
             else {
                 elem.classList.remove('on');
                 elem.classList.add('off');
-                await this.rslcontroller.updateUserWord(+id, 'learn');
+                await this.rslcontroller.updateStateUserWord(+id, 'learn');
             }
         }
     }
@@ -204,12 +220,12 @@ class TbWordsView {
             if (elem.classList.contains('off')) {
                 elem.classList.remove('off');
                 elem.classList.add('on');
-                await this.rslcontroller.updateUserWord(+id, 'easy');
+                await this.rslcontroller.updateStateUserWord(+id, 'easy');
             }
             else {
                 elem.classList.remove('on');
                 elem.classList.add('off');
-                await this.rslcontroller.updateUserWord(+id, 'learn');
+                await this.rslcontroller.updateStateUserWord(+id, 'learn');
             }
         }
     }
